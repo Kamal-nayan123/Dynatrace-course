@@ -7,19 +7,13 @@ Metrics, Logs, and Traces are often called the "three pillars of observability."
 
 ```mermaid
 graph TD
-    subgraph "Problem Analysis Flow"
-        Problem["fa:fa-user-slash User-Facing Problem<br>'The website is slow!'"] --> Davis["fa:fa-brain Davis AI<br>Analyzes all data in context"];
+    Problem["User-Facing Problem<br>'The website is slow!'"] --> Davis["Davis AI<br>(Analyzes all data in context)"];
 
-        subgraph "Three Pillars of Observability"
-            direction LR
-            Metrics["fa:fa-chart-line Metrics (The What)<br>- High response time<br>- CPU at 95%<br>- High error rate"]
-            Traces["fa:fa-sitemap Traces (The Where)<br>- Trace shows 4s latency in PaymentService"]
-            Logs["fa:fa-file-alt Logs (The Why)<br>- Log shows 'OutOfMemory' error"]
-        end
-
-        Davis --> Metrics;
-        Davis --> Traces;
-        Davis --> Logs;
+    subgraph "To Determine Root Cause, Davis AI Uses"
+        direction LR
+        Davis --> Metrics["Metrics (The What)<br>- High response time<br>- CPU at 95%"]
+        Davis --> Traces["Traces (The Where)<br>- Trace shows 4s latency in PaymentService"]
+        Davis --> Logs["Logs (The Why)<br>- Log shows 'OutOfMemory' error"]
     end
 ```
 

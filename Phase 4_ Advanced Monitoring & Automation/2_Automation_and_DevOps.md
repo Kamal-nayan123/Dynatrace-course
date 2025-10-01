@@ -12,15 +12,10 @@ In modern DevOps practices, the goal is to increase deployment velocity without 
 ### Diagram: CI/CD Integration Flow
 ```mermaid
 graph LR
-    Dev[fa:fa-user Developer] -- "1. Code Commit" --> Pipeline[fa:fa-cogs CI/CD Pipeline<br>(Jenkins, GitHub Actions, etc.)]
-    Pipeline -- "2. Send Deployment Event" --> DT[fa:fa-cloud Dynatrace API]
+    Dev("Developer") -- "1. Code Commit" --> Pipeline("CI/CD Pipeline<br>(Jenkins, GitHub Actions, etc.)")
+    Pipeline -- "2. Send Deployment Event" --> DT("Dynatrace API")
     DT -- "3. Get Quality Gate Feedback" --> Pipeline
-    Pipeline -- "4. Deploy (if Quality Gate passes)" --> Env[fa:fa-server Staging/Prod<br>Environment]
-
-    style Dev fill:#cce5ff,stroke:#333
-    style Pipeline fill:#fff2cc,stroke:#333
-    style DT fill:#0f5,stroke:#333
-    style Env fill:#d4edda,stroke:#333
+    Pipeline -- "4. Deploy (if passes)" --> Env("Staging/Prod Environment")
 ```
 
 ## 2. Quality Gates with Dynatrace in Pipelines

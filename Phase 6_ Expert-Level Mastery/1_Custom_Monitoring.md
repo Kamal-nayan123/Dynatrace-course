@@ -44,30 +44,16 @@ While Dynatrace provides unparalleled automatic, out-of-the-box observability, t
 *   **Diagram: OneAgent and OpenTelemetry Working Together**
     ```mermaid
     graph TD
-        subgraph "Your Application Stack"
-            Svc1[Java / .NET Service]
-            Svc2[Go / Rust / C++ Service]
+        subgraph "Application Stack & Instrumentation"
+            Svc1["Java / .NET Service"] -- Instrumented by --> Inst1("OneAgent<br>(PurePath® Technology)")
+            Svc2["Go / Rust / C++ Service"] -- Instrumented by --> Inst2("OpenTelemetry<br>(Open Standard)")
         end
 
-        subgraph "Instrumentation Method"
-            Inst1[fa:fa-cogs OneAgent<br>PurePath® Technology]
-            Inst2[fa:fa-code OpenTelemetry<br>Open Standard]
+        subgraph "Unified Observability Platform"
+            DT["Dynatrace Platform<br>(Data is unified, correlated, and analyzed)"]
         end
-
-        subgraph "Dynatrace Platform"
-            DT([fa:fa-cloud Dynatrace<br>Data is unified, correlated,<br>and analyzed by Davis AI])
-        end
-
-        Svc1 --> Inst1
-        Svc2 --> Inst2
 
         Inst1 -- "PurePath® Data" --> DT
         Inst2 -- "OTel Protocol Data" --> DT
-
-        style Svc1 fill:#cce5ff
-        style Svc2 fill:#d4edda
-        style Inst1 fill:#e2e3e5
-        style Inst2 fill:#e2e3e5
-        style DT fill:#0f5,stroke:#333,stroke-width:2px
     ```
 *   **Practical Example:** A company has a polyglot microservices architecture. Their primary services are written in Java and are monitored by OneAgent. However, a new high-performance data processing service is written in Rust, for which there is no OneAgent. The developers use the OpenTelemetry Rust libraries to instrument their code, generating traces for incoming requests and database calls. They configure their OTel exporter to point to their Dynatrace tenant's OTel endpoint. Now, when a request flows from a Java service (monitored by OneAgent) to the Rust service (monitored by OTel), the trace context is automatically propagated. In Dynatrace, they see a single, seamless PurePath that shows the transaction flowing through both services, providing true end-to-end visibility despite the different instrumentation methods.

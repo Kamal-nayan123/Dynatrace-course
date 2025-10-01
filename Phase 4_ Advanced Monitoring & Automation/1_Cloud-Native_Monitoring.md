@@ -12,33 +12,24 @@ Cloud-native is an approach to building and running applications that fully leve
 ### Diagram: Dynatrace in a Kubernetes Cluster
 ```mermaid
 graph TD
-    subgraph "Kubernetes Cluster Architecture"
-        Master[fa:fa-chess-king K8s Control Plane]
-        Operator([fa:fa-robot Dynatrace Operator])
+    subgraph "Kubernetes Cluster"
+        ControlPlane("K8s Control Plane")
+        Operator("Dynatrace Operator")
 
-        subgraph "Worker Nodes"
-            direction LR
-            subgraph "Node 1"
-                N1_OA[(fa:fa-cogs OneAgent DaemonSet)]
-                N1_P1[fa:fa-box Pod A - App]
-                N1_P2[fa:fa-box Pod B - DB]
-            end
-            subgraph "Node 2"
-                N2_OA[(fa:fa-cogs OneAgent DaemonSet)]
-                N2_P1[fa:fa-box Pod C - API]
-                N2_P2[fa:fa-box Pod D - Cache]
-            end
+        subgraph "Worker Node 1"
+            N1_OA("OneAgent DaemonSet") -- monitors --> N1_P1("Pod A - App") & N1_P2("Pod B - DB")
         end
 
-        Master -- "schedules pods on" --> "Worker Nodes"
-        Operator -- "deploys & manages" --> N1_OA
-        Operator -- "deploys & manages" --> N2_OA
+        subgraph "Worker Node 2"
+            N2_OA("OneAgent DaemonSet") -- monitors --> N2_P1("Pod C - API") & N2_P2("Pod D - Cache")
+        end
 
-        N1_OA -- "monitors" --> N1_P1 & N1_P2
-        N2_OA -- "monitors" --> N2_P1 & N2_P2
+        ControlPlane -- "schedules pods" --> N1_P1 & N1_P2
+        ControlPlane -- "schedules pods" --> N2_P1 & N2_P2
+        Operator -- "deploys & manages" --> N1_OA & N2_OA
     end
 
-    style Operator fill:#0f5,stroke:#333,stroke-width:2px
+    style Operator fill:#9f9,stroke:#333,stroke-width:2px
 ```
 
 ## 2. Cloud Foundry Monitoring
