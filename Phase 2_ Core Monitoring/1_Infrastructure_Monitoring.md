@@ -27,33 +27,22 @@ Infrastructure monitoring is the foundation of observability. It involves collec
 *   **Diagram: Kubernetes Monitoring with Dynatrace**
     ```mermaid
     graph TD
-        subgraph Kubernetes Cluster
-            Operator([fa:fa-robot Dynatrace Operator])
+        subgraph "Kubernetes Cluster"
+            Operator("Dynatrace Operator")
 
-            subgraph Worker Node 1
-                direction TB
-                N1_OA[(fa:fa-cogs OneAgent DaemonSet)]
-                N1_P1[fa:fa-box Pod: App]
-                N1_P2[fa:fa-box Pod: Database]
+            subgraph "Worker Node 1"
+                N1_OA("OneAgent DaemonSet") --> N1_P1("Pod: App") & N1_P2("Pod: Database")
             end
 
-            subgraph Worker Node 2
-                direction TB
-                N2_OA[(fa:fa-cogs OneAgent DaemonSet)]
-                N2_P1[fa:fa-box Pod: API]
-                N2_P2[fa:fa-box Pod: Cache]
+            subgraph "Worker Node 2"
+                N2_OA("OneAgent DaemonSet") --> N2_P1("Pod: API") & N2_P2("Pod: Cache")
             end
 
-            Operator -- "manages rollout of" --> N1_OA
-            Operator -- "manages rollout of" --> N2_OA
-
-            N1_OA -- "monitors" --> N1_P1
-            N1_OA -- "monitors" --> N1_P2
-            N2_OA -- "monitors" --> N2_P1
-            N2_OA -- "monitors" --> N2_P2
+            Operator -- "manages rollout" --> N1_OA
+            Operator -- "manages rollout" --> N2_OA
         end
 
-        style Operator fill:#0f5,stroke:#333,stroke-width:2px
+        style Operator fill:#9f9,stroke:#333,stroke-width:2px
     ```
 *   **Real-time Example:** A developer notices that their shopping cart service is unreliable. In the Dynatrace Kubernetes dashboard, they can see an overview of their cluster's health. They drill down to the `cart-service` workload and see that several pods are in a `CrashLoopBackOff` state. Dynatrace provides the container logs directly in the UI, which show an "Out of Memory" error. The developer realizes the memory limit for the pod is set too low, and they can quickly fix the issue.
 

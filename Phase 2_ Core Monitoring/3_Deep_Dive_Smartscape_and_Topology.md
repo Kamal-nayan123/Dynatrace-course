@@ -14,11 +14,11 @@ Smartscape visualizes your environment in distinct, interconnected layers.
 
 ```mermaid
 graph TD
-    subgraph "Smartscape Topology"
-        A[fa:fa-window-maximize Applications<br>What the user sees] -->|depends on| B(fa:fa-cogs Services<br>The application logic)
-        B -->|runs in| C{fa:fa-microchip Processes<br>The code running on the OS}
-        C -->|runs on| D[fa:fa-server Hosts<br>The physical or virtual servers]
-        D -->|runs in| E(fa:fa-building Data Centers<br>The physical location)
+    subgraph "Smartscape Vertical Topology"
+        A["Applications<br>(What the user sees)"] -->|depends on| B("Services<br>(The application logic)")
+        B -->|runs in| C{"Processes<br>(The code running on the OS)"}
+        C -->|runs on| D["Hosts<br>(The physical or virtual servers)"]
+        D -->|runs in| E("Data Centers<br>(The physical location)")
     end
 ```
 

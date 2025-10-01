@@ -27,16 +27,10 @@ These terms are often used interchangeably, but they have distinct meanings.
 ```mermaid
 graph TD
     subgraph Observability
-        direction TB
-        subgraph "Three Pillars"
-            direction LR
-            M[Metrics]
-            L[Logs]
-            T[Traces]
-        end
-        APM[Application Performance Monitoring] --> M
-        APM --> L
-        APM --> T
+        APM[Application Performance Monitoring] --> Pillars(Three Pillars)
+        Pillars --> M[Metrics]
+        Pillars --> L[Logs]
+        Pillars --> T[Traces]
     end
 ```
 

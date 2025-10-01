@@ -12,24 +12,20 @@ Davis is the causal AI engine at the heart of the Dynatrace platform. It's what 
 ### Diagram: Static Thresholds vs. Davis AI Baselining
 
 ```mermaid
-graph LR
+graph TD
     subgraph "Traditional Monitoring Logic"
-        direction TB
-        TM_Metric[Metric Data] --> TM_Rule{"Static Threshold<br>e.g., CPU > 90%?"}
-        TM_Rule -- "Yes" --> TM_Alert[fa:fa-bell Alert]
-        TM_Rule -- "No" --> TM_Ok[fa:fa-check-circle OK]
-        TM_Result((Result: Frequent false positives<br>or missed problems))
-        TM_Alert --> TM_Result
+        TM_Metric[Metric Data] --> TM_Rule{"Static Threshold?<br>(e.g., CPU > 90%)"}
+        TM_Rule -- "Yes" --> TM_Alert["Alert!"]
+        TM_Rule -- "No" --> TM_Ok["OK"]
+        TM_Alert --> TM_Result((Result: Frequent false positives<br>or missed problems))
         TM_Ok --> TM_Result
     end
 
     subgraph "Dynatrace Davis® AI Logic"
-        direction TB
-        DM_Metric[Metric Data] --> DM_Rule{"Dynamic Baseline<br>Is this behavior normal for now?"}
-        DM_Rule -- "No" --> DM_Alert[fa:fa-bell-slash Precise Problem Alert]
-        DM_Rule -- "Yes" --> DM_Ok[fa:fa-check-circle OK]
-        DM_Result((Result: Fewer, more accurate alerts<br>that identify the root cause))
-        DM_Alert --> DM_Result
+        DM_Metric[Metric Data] --> DM_Rule{"Dynamic Baseline?<br>(Is this behavior normal for now?)"}
+        DM_Rule -- "No" --> DM_Alert["Precise Problem Alert"]
+        DM_Rule -- "Yes" --> DM_Ok["OK"]
+        DM_Alert --> DM_Result((Result: Fewer, more accurate alerts<br>with root cause))
         DM_Ok --> DM_Result
     end
 

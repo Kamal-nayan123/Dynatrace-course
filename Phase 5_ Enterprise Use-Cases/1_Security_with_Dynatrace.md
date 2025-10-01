@@ -26,20 +26,16 @@ Modern application development, with its reliance on open-source libraries and r
 *   **Diagram: Davis Security Prioritization**
     ```mermaid
     graph TD
-        A[fa:fa-shield-alt All Detected CVEs<br>(e.g., 100 vulnerabilities)] -->|Davis AI Contextual Analysis| B{Library is Loaded in Memory?}
-        B -- "Yes (e.g., 45)" --> C{Vulnerable Function is Used?}
-        B -- "No (e.g., 55)" --> Z1[Noise - Ignored]
-        C -- "Yes (e.g., 15)" --> D{Reachable from Public Internet?}
-        C -- "No (e.g., 30)" --> Z2[Low Priority]
-        D -- "Yes (e.g., 5)" --> E{Connects to Sensitive Data?}
-        D -- "No (e.g., 10)" --> Z3[Medium Priority]
-        E -- "Yes (e.g., 2)" --> F[fa:fa-skull-crossbones CRITICAL RISK<br>Fix This Now!]
-        E -- "No (e.g., 3)" --> Z4[High Priority]
+        A["All Detected CVEs<br>(e.g., 100 vulnerabilities)"] -->|Davis AI Contextual Analysis| B{"Library is Loaded in Memory?"}
+        B -- "Yes (e.g., 45)" --> C{"Vulnerable Function is Used?"}
+        B -- "No (e.g., 55)" --> Z1["Noise - Ignored"]
+        C -- "Yes (e.g., 15)" --> D{"Reachable from Public Internet?"}
+        C -- "No (e.g., 30)" --> Z2["Low Priority"]
+        D -- "Yes (e.g., 5)" --> E{"Connects to Sensitive Data?"}
+        D -- "No (e.g., 10)" --> Z3["Medium Priority"]
+        E -- "Yes (e.g., 2)" --> F["CRITICAL RISK<br>Fix This Now!"]
+        E -- "No (e.g., 3)" --> Z4["High Priority"]
 
-        style F fill:#ff4d4d,stroke:#b30000,stroke-width:2px,color:#fff
-        style Z1 fill:#f0f0f0,stroke:#ccc
-        style Z2 fill:#ffeeba,stroke:#ffc107
-        style Z3 fill:#ffc107,stroke:#e0a800
-        style Z4 fill:#fd7e14,stroke:#cf6810
+        style F fill:#f99,stroke:#333,stroke-width:2px
     ```
 *   **Practical Example:** An application uses a library with a known vulnerability. A static scanner would simply report this as "High" severity. Davis analyzes the situation: it sees that the vulnerable code path is part of an admin-only function that is never called in production and the application is not internet-facing. It assigns the vulnerability a "Low" risk score. In another application, a different vulnerability, rated "Medium" by the vendor, is found. However, Davis sees that this code is part of the main login service, is exposed to the internet, and is being actively probed by suspicious IP addresses. Davis elevates this to a "Critical" risk and opens a high-priority problem ticket, enabling the security team to focus their efforts on the real and present danger.

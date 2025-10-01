@@ -41,33 +41,24 @@ These two features are fundamental to organizing and governing a large Dynatrace
 *   **Diagram: Management Zones for Different Teams**
     ```mermaid
     graph TD
-        subgraph Full Dynatrace Environment
-            direction LR
-            E1["fa:fa-server Host A, fa:fa-cogs Svc 1<br>Tags: team:web"]
-            E2["fa:fa-server Host B, fa:fa-cogs Svc 2<br>Tags: team:api"]
-            E3["fa:fa-server Host C, fa:fa-cogs Svc 3<br>Tags: team:db"]
+        subgraph "Full Dynatrace Environment (All Monitored Entities)"
+            E1("Host A, Svc 1<br>tag: team=web")
+            E2("Host B, Svc 2<br>tag: team=api")
+            E3("Host C, Svc 3<br>tag: team=db")
         end
 
-        subgraph "Filtered Views per Team"
-            direction LR
-            MZ_Web["fa:fa-users MZ for Web Team<br>(Sees only entities tagged 'team:web')"]
-            MZ_API["fa:fa-users MZ for API Team<br>(Sees only entities tagged 'team:api')"]
-            MZ_DB["fa:fa-users MZ for DB Team<br>(Sees only entities tagged 'team:db')"]
+        subgraph "Filtered Views (Management Zones)"
+            MZ_Web("MZ for Web Team<br>Rule: tag='team:web'")
+            MZ_API("MZ for API Team<br>Rule: tag='team:api'")
+            MZ_DB("MZ for DB Team<br>Rule: tag='team:db'")
         end
 
-        Full_Environment -->|is partitioned into| Filtered_Views_per_Team
+        E1 -- "is visible in" --> MZ_Web
+        E2 -- "is visible in" --> MZ_API
+        E3 -- "is visible in" --> MZ_DB
 
-        E1 -.-> MZ_Web
-        E2 -.-> MZ_API
-        E3 -.-> MZ_DB
-
-        linkStyle 0 stroke-width:0px
-        linkStyle 1 stroke:grey,stroke-width:2px,stroke-dasharray: 5 5;
-        linkStyle 2 stroke:grey,stroke-width:2px,stroke-dasharray: 5 5;
-        linkStyle 3 stroke:grey,stroke-width:2px,stroke-dasharray: 5 5;
-
-        style E1 fill:#cce5ff,stroke:#333
-        style E2 fill:#d4edda,stroke:#333
-        style E3 fill:#f8d7da,stroke:#333
+        style E1 fill:#cce5ff
+        style E2 fill:#d4edda
+        style E3 fill:#f8d7da
     ```
 *   **Practical Example:** A large financial services company has separate teams for `Retail Banking`, `Investment Banking`, and `Internal Tools`. The Dynatrace administrator creates three corresponding management zones based on entity tags. They then create user groups for each team and assign them access only to their respective management zone. Now, when a developer from the Retail Banking team logs in, they see a view of Dynatrace that is completely tailored to them—they only see problems, services, and hosts relevant to the retail banking application, ensuring focus and preventing them from accidentally viewing or changing settings for other teams' applications.

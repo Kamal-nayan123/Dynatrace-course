@@ -14,29 +14,20 @@ Think of Dynatrace like a team of detectives solving a mystery in your IT enviro
 ### Diagram: Dynatrace Architecture
 
 ```mermaid
-flowchart TD
+graph TD
     subgraph "Your Monitored Environment"
-        direction LR
-        subgraph "Hosts"
-            H1[Web Server<br>[OneAgent]]
-            H2[App Server<br>[OneAgent]]
-            H3[Database<br>[OneAgent]]
-        end
+        Hosts("Host 1 [OneAgent]<br>Host 2 [OneAgent]<br>Host 3 [OneAgent]")
     end
 
     subgraph "Dynatrace Platform"
-        Cluster((Dynatrace Cluster<br>SaaS or Managed<br><br>Processes data with<br>Smartscape, Davis AI, etc.))
+        Cluster("Dynatrace Cluster<br>(SaaS or Managed)<br>Processes & Analyzes Data")
     end
 
-    AG(ActiveGate<br>Secure Proxy)
+    AG[ActiveGate<br>Secure Proxy]
 
-    H1 & H2 & H3 -- "Data" --> AG
-
-    H1 & H2 & H3 -. "Direct Connection (Optional)" .-> Cluster
-
-    AG -- "Secure, Compressed Data" --> Cluster
-
-    linkStyle 3 stroke-dasharray: 5 5
+    Hosts -- "Primary Path" --> AG
+    AG -- "Secure & Compressed" --> Cluster
+    Hosts -. "Optional Direct Path" .-> Cluster
 ```
 
 ## Core Components
